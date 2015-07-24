@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<html >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../../scripts/style.css" type="text/css" media="screen, projection" />
+<link href="../../../scripts/styles.css" rel="stylesheet" type="text/css" />
+<link type="text/css" href="../../../scripts/overcast/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+<link rel="shortcut icon" type="image/x-icon" href="../../../pic/ficon.ico">
+<script type="text/javascript" src="../../../scripts/jq.js"></script>
+<script type="text/javascript" src="../../../scripts/jquery.form.js"></script>
+<script type="text/javascript" src="../../../scripts/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../../../scripts/jquery-ui-1.8.23.custom.min.js"></script>
+
+<script type="text/javascript">
+			$(function(){
+				var availableTags = [
+				"./",
+				"./Bases"
+				];
+
+				$( "#tags" ).autocomplete({
+					source: availableTags
+				});
+
+				// Accordion
+				$("#accordion").accordion({ header: "h3", animated: 'bounceslide', active: 0 });
+
+				// Tabs
+				$('#tabs').tabs();
+
+
+				// Dialog
+				$('#dialog').dialog({
+					autoOpen: false,
+					show: "Explode",
+					hide: "Explode",
+					draggable: true,
+					width: 400,
+					buttons: {
+					"Ok": function() {
+						$(this).dialog("close");
+						window.location = "../../../delete/{{.NameFile}}";
+					},
+					"Cancel": function() {
+						$(this).dialog("close");
+					}
+					}
+				});
+
+
+				$('#dialog1').dialog({
+					autoOpen: false,
+					show: "Explode",
+					hide: "Explode",
+					draggable: true,
+					width: 400,
+					buttons: {
+					"Ok": function() {
+						$(this).dialog("close");
+						window.location = "../../../unlogon";
+					},
+					"Cancel": function() {
+						$(this).dialog("close");
+					}
+					}
+				});
+
+				$('#dialog2').dialog({
+					autoOpen: false,
+					show: "Explode",
+					hide: "Explode",
+					draggable: true,
+					width: 400,
+					buttons: {
+					"Ok": function() {
+					$(this).dialog("close");
+						document.forms['fullpath'].submit();
+					},
+					"Cancel": function() {
+						$(this).dialog("close");
+					}
+				}
+				});
+
+				// Dialog Link
+				$('#dialog_link').click(function(){
+					$('#dialog').dialog('open');
+					return false;
+				});
+
+				$('#dialog_link1').click(function(){
+					$('#dialog1').dialog('open');
+					return false;
+				});
+
+				$('#dialog_link2').click(function(){
+					$('#dialog2').dialog('open');
+					return false;
+				});
+
+				// Datepicker
+				$('#datepicker').datepicker({
+					inline: true
+				});
+
+				// Slider
+				$('#slider').slider({
+					range: true,
+					values: [17, 67]
+				});
+
+				// Progressbar
+				$("#progressbar").progressbar({
+					value: 20
+				});
+
+				//hover states on the static widgets
+				$('#dialog_link, ul#icons li').hover(
+					function() { $(this).addClass('ui-state-hover'); },
+					function() { $(this).removeClass('ui-state-hover'); }
+				);
+
+				$('#dialog_link2, ul#icons li').hover(
+					function() { $(this).addClass('ui-state-hover'); },
+					function() { $(this).removeClass('ui-state-hover'); }
+				);
+
+			});
+
+			$(document).ready(function(){
+
+
+				var HeightScreen = $(window).height();
+				$("#buttonUp").css({"bottom":"10px","left":"10px"});
+				$('#dialog_link2').addClass('hidform');
+				$(window).scroll(function () {
+				var arr = [];
+				for (var i = 0; i <= 100; i++) 
+				{
+					arr[i]=$("#s"+i).css("width");
+				};
+					if (HeightScreen<$(document).scrollTop()*4) 
+					{
+						if ($("#buttonUp").css("display")=="none") 
+						{
+								$("#buttonUp").fadeIn("slow");
+								$('#t0').addClass('fix');
+								for (var ii = 0; ii <= 100; ii++) 
+								{
+									$("#t"+ii).css({"top":"0px","width":arr[ii]});
+								};
+						} 
+					}
+					else
+						{
+							if ($("#buttonUp").css("display")=="block") 
+							{
+								$("#buttonUp").fadeOut("slow");
+								$('#t0').removeClass('fix');
+							}
+						}
+					
+				});
+			});
+
+			function go () 
+			{ 
+				var multipleValues = $("#tablename").val();
+				var db = $("#tags").val();
+			if (multipleValues!="Выберите таблицу") {
+				$.ajax({
+			    type: "POST",
+			    url: "../../bytab",
+			    data: "selection=" + multipleValues+"&databaze="+db,
+			    success: function(msg){
+			   		$('#moo').html(msg);
+			   		$('#dialog_link2').removeClass('hidform');
+			   }
+			 }); }
+
+			else{
+				$('#moo').html("");
+				$('#dialog_link2').addClass('hidform');
+				
+			};
+
+			}
+
+			function gogo () 
+			{ 
+				var multipleValues = $("#tablename").val();
+				var db = $("#tags").val();
+				if (db!="Выберите базу") {
+				$.ajax({
+			    type: "POST",
+			    url: "../../byselect",
+			    data: "selection=" + multipleValues+"&databaze="+db,
+			    success: function(msg){
+			   		$('#mooo').html(msg);
+			   		$('#dialog_link2').removeClass('hidform');
+			   		go();
+			   }
+			 });
+				}
+
+			else{
+				$('#moo').html("");
+				$('#mooo').html("");
+				$('#dialog_link2').addClass('hidform');
+			};
+			}
+
+
+			function delfiles () 
+			{ 
+				var arr = "";
+				$(':checkbox').each(function(){ 
+				if ($(this).hasClass("ch1")) {
+					if ($(this).is(':checked')) {
+						arr+=$(this).attr("name")+"|";
+					};
+				};
+				});
+			//alert (arr);
+				$.ajax({
+			    type: "POST",
+			    url: "../../delfiles",
+			    data: "delete=" + arr,
+			    success: function(msg){
+			   		$('#filezn').html(msg);
+			   }
+			 });
+
+			}
+
+			function upl () 
+			{ 
+				
+				var iframe = $('<iframe name="postiframe" id="postiframe" style="display: none" />');
+	            $("body").append(iframe);
+	            var form = $('#theuploadform');
+	            form.attr("action", "../../upload");
+	            form.attr("method", "post");
+	            form.attr("enctype", "multipart/form-data");
+	            form.attr("encoding", "multipart/form-data");
+	            form.attr("target", "postiframe");
+	            form.attr("file", $('#userfile').val());
+	            //alert($('#userfile').files[0].size);
+	            form.submit();
+	            $("#postiframe").load(function () {
+	                iframeContents = $("#postiframe")[0].contentWindow.document.body.innerHTML;
+	                $("#filezn").html(iframeContents);
+	            });
+	            $("#userfile").replaceWith($("#userfile").clone());
+	            return false;
+			}
+
+
+
+			function chall (ch,cha) 
+			{ 
+				
+				var checked = $('input[name='+ch+']').is(':checked')
+				$(':checkbox').each(function(){ 
+					if ($(this).hasClass(cha)) {$(this).attr('checked', checked);};
+					 
+
+				});
+
+			}
+
+		</script>
+
+		<style type="text/css">
+			/*demo page css*/
+			#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+
+			#dialog_link1 {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#dialog_link1 span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+
+			#dialog_link2 {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#dialog_link2 span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+
+			#button {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#button:hover {padding: .4em 1em .4em 20px; text-decoration: none;position: relative; color: #333366;}
+			#button .ui-icon:hover {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px; color: #333366;}
+			#button span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+
+			ul#icons {margin: 0; padding: 0;}
+			ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+			ul#icons span.ui-icon {float: left; margin: 0 4px; font-size: 20px;}
+
+
+
+
+		</style>
+
+
+<title>{{.Title}}</title>
+</head>
+<body>
+
+<div id="wrapper">
+	
+<header onclick="window.location = '../../../view/{{.NameFile}}';" id="header">
+	<img class="imgico" src="../../../pic/ficon.ico">
+<div class="giganttitle">{{.Title}}</div>
+</header><!-- #header-->
+<section id="middle">
+<div id="container">
+<div id="content">
+<!-- <div id="head_text" class="bashka">{{.Title}}</div> Free Easy Network Remote Instrument for Relation-->
+<br>
+<br>
+<div id="page_text"></div>
+<br>
+<br>                    
+</div><!-- #content-->
+</div><!-- #container-->
+
+<aside id="sideLeft">
+
+<div id="tabs">
+			<ul>
+				<li><a href={{.Menuw}}>{{.Title}}</a></li>
+				<li><a href={{.Menue}}>[ред.]</a></li>
+				<li><a href="#tabs-3"><span class="ui-icon ui-icon-document"></span></a></li>
+				<li><a href="#tabs-4"><span class="ui-icon ui-icon-trash"></span></a></li>
+				<li><a href="#tabs-5"><span class="ui-icon ui-icon-disk"></span></a></li>
+			</ul>
+				<div id="tabs-4">
+					<p><a href="#" id="dialog_link" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-trash"></span>Удалить {{.Title}}</a></p>
+	
+
+						<div id="dialog" title="Удалить">
+							<p>Удалить эту страницу?</p>
+						</div>
+				</div>
+				<div id="tabs-5">
+
+
+					 <form id="theuploadform">
+					    <input  onchange="upl();return false;" multiple id="userfile" name="userfile" size="50" type="file" />
+					</form>
+
+
+
+
+
+					<br><br>
+					<dir id="filezn">
+						{{.Fnames}}
+					</dir>
+				</div>
+
+				<div id="tabs-3">
+
+					
+
+						<form name="fullpath" action="../../../ot4" method="POST">
+						<br>
+	
+					    <br>
+						<div class="ui-widget">
+					    <label for="tags"><b>Введите имя базы: </b></label>
+					   <!--  <input onclick = "gogo()" id="tags" name="tags" value="" /> -->
+					    {{.BaseName}}
+					    <br><br>
+					    <div id="mooo"></div>
+					    <!--  {{.ASelects}} -->
+					    <br>
+					    <div id="moo"></div>
+					    <!-- {{.AChecks}} -->
+					
+					</div>
+					</form>
+					<br><br>
+					
+					<p><a href="#" id="dialog_link2" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-document"></span>Сформировать отчёт</a></p>
+	
+
+					<div id="dialog2" title="Сформировать?">
+							<p>Сформировать?</p>
+					</div>
+					 
+
+				</div>
+		</div>
+
+
+
+
+</aside><!-- #sideLeft -->
+
+<aside id="sideRight">
+<ul id="sideLeft_menu">
+<div id="nav">
+<div id="accordion">
+			<div>
+				<h3><a href="#">Меню</a></h3>
+				<div>
+					{{.Menu}}
+				</div>
+			</div>
+			<div>
+				<h3><a href="#">Добавить</a></h3>
+				<div>
+						<form name="newpage" method="POST">
+						<div><textarea name="new" rows="1" cols="15"></textarea></div><br>
+						<p><a href="#" Onclick="document.forms['newpage'].submit();" id="button" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-plusthick"></span>Добавить</a></p>
+						</form>
+						
+				</div>
+				<h3><a href="#">Скрытые</a></h3>
+				<div>
+						{{.HidMenu}}
+											
+				</div>
+				{{.ExitP}}
+				
+			</div>
+		</div>
+
+
+
+</div>
+</ul>
+<br>
+<br>
+</aside><!-- #sideRight -->
+<div id="buttonUp"><a href="#"><ul id="icons" class="ui-widget ui-helper-clearfix">
+<li style="font-size:30px;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-arrow-n"><span class="ui-icon ui-icon-circle-arrow-n"></span></li></ul></a></div>
+</section><!-- #middle-->
+</div><!-- #wrapper -->
+<div class="footerviz">
+<footer id="footer">
+<strong>Copyright ©</strong><a href="mailto:i@ulvham.ru">Skald</a>
+</footer><!-- #footer -->
+</div>
+</body>
+</html>

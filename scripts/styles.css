@@ -1,0 +1,70 @@
+
+
+
+/* this is the CSS for the menu that you will need. */
+#menu_holder {
+	height: 100%;
+	width: 100%;
+	display: block;
+	position: absolute;
+	top: -1000px;
+}
+#nav {
+	height: 100%;
+	width: 100%;
+	margin: 0px auto;
+	padding: 0px;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+#hit_area {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	display: block;
+	background-repeat: no-repeat;
+}
+#hit_area2 {
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center top;
+	padding: 0px;
+	display: block;
+	position: absolute;
+	margin: 0px;
+	left: 0px;
+	top: 100%;
+}
+#nav ul {
+	margin: 0px;
+	padding: 0px 0px 0px 21px;
+	width: 300px;
+	list-style-type: none;
+	background-repeat: no-repeat;
+}
+#nav li{
+width: 100%;
+	margin: 1px;
+	padding: 1px;
+	float: left;
+}
+#nav li a:link, #nav li a:active, #nav li a:visited {
+	background-repeat: repeat-x;
+	/*height: 58px;
+	width: 100px;*/
+	display: block;
+	/*line-height: 58px;*/
+	/*font-weight: bold;*/
+	/*color: #666666;*/
+	text-decoration: none;
+	/*font-family: Arial, Helvetica, sans-serif;*/
+	text-align: center;
+	font-size: 120%;
+}
+#nav li a:focus, #nav li a:hover{
+	text-decoration : none;
+	-moz-outline:0;
+	/*color: #FFFFFF;*/
+	background-repeat: repeat-x;
+}

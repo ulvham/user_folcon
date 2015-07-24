@@ -1,0 +1,52 @@
+<center><h1>Суточные данные по ГРС</h1></center>
+<br>
+<center><table border="1" bordercolor="#000000" style="background-color:#CCFFFF; text-align:center" width="100%" cellpadding="3" cellspacing="0">
+	<tr>
+		<td><b>ГРС</b></td>
+		<td><b>Суточный расход (тыс.м.куб.)</b></td>
+	</tr>
+	<tr>
+		<td>ГРС-1 г. Барнаула</td>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>ГРС-2 г. Барнаула</td>
+		<td>9</td>
+	</tr>
+	<tr>
+		<td>ГРС-3 г. Барнаула</td>
+		<td>12</td>
+	</tr>
+	<tr>
+		<td>ГРС Тальменка</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>ГРС Выползово</td>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>ГРС Косиха</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>ГРС Новоалтайска</td>
+		<td>10</td>
+	</tr>
+	<tr>
+		<td>ГРС Троицкая</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>ГРС Первомайская</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>ГРС Комсомольская</td>
+		<td>8</td>
+	</tr>
+</table></center>
+<br><br>
+
+<input type=button value='Сохранить в CSV'>
+

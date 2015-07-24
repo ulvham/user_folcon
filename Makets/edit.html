@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../../scripts/style.css" type="text/css" media="screen, projection" />
+</head>
+
+<body>
+<!-- <div id="head_text" class="bashka">{{.Title}}</div> -->
+<br>
+<br>
+<div id="head_text" class="bashka">Изменение {{.NameFile}} <i>{{.Title}}</i></div>
+<br>
+<br>
+<div id="page_text">
+<form action="/save/{{.NameFile}}" method="POST">
+<div><textarea class="textareafull" name="title" rows="1" >{{.Title}}</textarea></div><br>
+<div><textarea class="textareafull" name="body" rows="20" >{{.Body}}</textarea></div>
+<div><input name="visib" type="checkbox" {{.IsCheck}}>показывать в меню?</div>
+<div><center><input type="submit" value="Сохранить"></center></div>
+</form>
+</div>
+<br>
+<br>                    
+
+</body>
+</html>
