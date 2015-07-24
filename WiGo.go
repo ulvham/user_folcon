@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	//"errors"
 	"fmt"
 	"io/ioutil"
 	//"net"
@@ -16,7 +15,6 @@ import (
 	"strings"
 	"text/template"
 	"time"
-	//"net/url"
 )
 
 type Page struct {
